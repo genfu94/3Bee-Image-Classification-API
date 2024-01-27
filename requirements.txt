@@ -1,3 +1,6 @@
 fastapi
 uvicorn
 pydantic-settings
+pyjwt
+passlib[bcrypt]
+pydantic-settings
