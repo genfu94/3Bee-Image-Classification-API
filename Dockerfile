@@ -1,4 +1,4 @@
-FROM python
+FROM python:3.10
 WORKDIR /api
 RUN pip install --upgrade pip
 COPY requirements.txt .
