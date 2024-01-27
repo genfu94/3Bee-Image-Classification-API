@@ -7,5 +7,5 @@ class Token(BaseModel):
 
 
 class UserRegistration(BaseModel):
-    email: str
+    username: str
     password: str
