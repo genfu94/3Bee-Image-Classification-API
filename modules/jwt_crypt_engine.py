@@ -2,7 +2,6 @@ import jwt
 from typing import Union
 from datetime import datetime, timedelta
 from passlib.context import CryptContext
-from abc import ABC, abstractmethod
 
 ALGORITHM = "HS256"
 ACCESS_TOKEN_EXPIRE_MINUTES = 60 * 24
@@ -38,20 +37,3 @@ class JWTCryptEngine:
             raise Exception("Token is not valid")
 
         return payload
-
-
-class AuthenticationEngine(ABC):
-    def __init__(self, jwt_crypt_engine: JWTCryptEngine):
-        self.jwt_crypt_engine = jwt_crypt_engine
-
-    @abstractmethod
-    def _get_user(self, username: str):
-        pass
-
-    @abstractmethod
-    def register_user(self, username: str, password: str):
-        pass
-
-    @abstractmethod
-    def authenticate_user(self, username: str, password: str):
-        pass
