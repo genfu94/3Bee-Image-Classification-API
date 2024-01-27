@@ -2,6 +2,7 @@ from fastapi import FastAPI
 import uvicorn
 from fastapi.middleware.cors import CORSMiddleware
 import routes.auth
+import routes.image
 
 app = FastAPI()
 
@@ -16,6 +17,7 @@ app.add_middleware(
 )
 
 app.include_router(routes.auth.router)
+app.include_router(routes.image.router)
 
 
 @app.on_event("startup")
