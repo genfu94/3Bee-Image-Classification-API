@@ -11,11 +11,17 @@ from schemas.auth import Token
 from schemas.auth import UserRegistration
 from config import Settings
 from db_crud.auth import register_user, get_user_by_username, authenticate_user
-
+from time import sleep
 
 from database import SessionLocal, engine
 
-models.Base.metadata.create_all(bind=engine)
+# Bruteforce waiting for db startup
+while True:
+    try:
+        models.Base.metadata.create_all(bind=engine)
+        break
+    except:
+        sleep(5)
 
 settings = Settings()
 jwt_crypt_engine = JWTCryptEngine(settings.AUTH_SECRET_KEY)
