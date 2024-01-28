@@ -12,6 +12,12 @@ def get_predictions_by_username(db: Session, username: str) -> list[Prediction]:
     return []
 
 
+def get_prediction_by_id(db: Session, username: str, prediction_id: int):
+    user = db.query(User).filter_by(username=username).first()
+
+    return db.query(Prediction).filter_by(id=prediction_id, user_id=user.id).first()
+
+
 def add_prediction(
     db: Session, username: str, image_b64: str, prediction_class: str, class_desc: str
 ):
@@ -20,7 +26,7 @@ def add_prediction(
     if user:
         # Create a new Prediction instance
         prediction = Prediction(
-            username=username,
+            user_id=user.id,
             image_b64=image_b64,
             prediction_class=prediction_class,
             class_desc=class_desc,
