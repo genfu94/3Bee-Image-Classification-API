@@ -23,5 +23,5 @@ Execute the following command to launch the application using Docker Compose.
 
 ## Explore the API
 
-Open your web browser and go to the <a href="localhost:8000/docs">API Swagger</a>.
+Open your web browser and go to localhost:8000/docs to access the API Swagger.
 The Swagger UI will be displayed, allowing you to explore and interact with the various API endpoints.
