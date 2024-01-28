@@ -4,6 +4,9 @@ from .auth import validate_token_and_get_active_user
 from typing import Annotated
 from services.image import predict_image
 from tensorflow.keras.applications.resnet50 import ResNet50
+import uuid
+from PIL import Image
+import io
 
 router = APIRouter(prefix="")
 resnet_model = ResNet50(weights="imagenet")
@@ -29,8 +32,8 @@ async def upload_image(
             status_code=400,
         )
 
-    with open("temp_image.jpg", "wb") as f:
-        f.write(file.file.read())
+    request_object_content = await file.read()
+    img = Image.open(io.BytesIO(request_object_content))
 
-    predictions = predict_image(resnet_model, "temp_image.jpg")
+    predictions = predict_image(resnet_model, img)
     return predictions[0][1]
