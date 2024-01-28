@@ -7,6 +7,17 @@ from tensorflow.keras.applications.resnet50 import ResNet50
 import uuid
 from PIL import Image
 import io
+import base64
+
+
+def image_to_base64(img):
+    image_byte_array = io.BytesIO()
+    img.save(image_byte_array, format="JPEG")
+    image_bytes = image_byte_array.getvalue()
+    image_base64 = base64.b64encode(image_bytes).decode("utf-8")
+
+    return image_base64
+
 
 router = APIRouter(prefix="")
 resnet_model = ResNet50(weights="imagenet")
@@ -34,6 +45,7 @@ async def upload_image(
 
     request_object_content = await file.read()
     img = Image.open(io.BytesIO(request_object_content))
+    img_b64 = image_to_base64(img)
 
-    predictions = predict_image(resnet_model, img)
-    return predictions[0][1]
+    prediction = predict_image(resnet_model, img)[0][1]
+    return prediction
